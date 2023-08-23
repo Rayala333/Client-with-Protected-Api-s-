@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 // const jwt = require('jsonwebtoken')
 // const bcrypt = require('bcrypt')
-// const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 
 
 //Pages or Router's
@@ -21,7 +21,13 @@ require('dotenv').config()
 
 const app = express()
 app.use(express.json())
-app.use(cors('*'))
+app.use(cors(
+    // {
+    //     origin: '*',
+    //     methods:["post","get"],
+    //     credentials : true,
+    // }
+))
 // app.use(cookieParser())
 
 //db connection

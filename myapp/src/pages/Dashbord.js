@@ -1,10 +1,11 @@
-import React, { useEffect} from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import login from '../userLogin/Login';
 
 const Dashbord = () => {
   const navigate = useNavigate()
+  const [data,setData]=useState()
 
   const token = JSON.parse(sessionStorage.getItem("x-access-token"))
   console.log(token)
@@ -16,19 +17,28 @@ const Dashbord = () => {
     });
 
         console.log(result.data,'result')
+        setData(result.data)
   }
+
+  console.log(data)
 
  
   useEffect(()=>{
-    if(!token){
-      navigate('/')
-    }else{
-      getData()
-    }  
-  },[])
+    !token? navigate('/'):getData() 
+  },[data])
+
+  const logoutHandler = ()=>{
+    sessionStorage.removeItem("x-access-token")
+  }
 
   return (
-    <div>Dashbord</div>
+    <>{
+      !data  && <div>Loading...</div>
+    }
+    {
+      <button onClick={logoutHandler}>logout</button>
+    }
+    </>
   )
 }
 

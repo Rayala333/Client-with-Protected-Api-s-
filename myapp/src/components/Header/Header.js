@@ -4,7 +4,7 @@ import './Header.css'
 
 
 const Header = () => {
-  
+    
 
   return (
 
@@ -15,9 +15,7 @@ const Header = () => {
                 <logo className='text'>HCL<sub>Tech</sub></logo>
 
                 <div className='navbar'>
-                
-                nav
-                    
+                    welcome to the my page please login   
                 </div>
 
         </div>
