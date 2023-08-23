@@ -9,7 +9,7 @@ const Dashbord = () => {
 
   const token = JSON.parse(sessionStorage.getItem("x-access-token"))
   console.log(token)
-  
+  const [reload,setReload]=useState(false)
 
   const getData = async ()=>{
     const result = await axios.get('http://localhost:8080/details',{
@@ -18,17 +18,21 @@ const Dashbord = () => {
 
         console.log(result.data,'result')
         setData(result.data)
+        setReload(true)
   }
 
   console.log(data)
 
  
   useEffect(()=>{
-    !token? navigate('/'):getData() 
+    if(!reload){
+      getData()
+    }
   },[data])
 
   const logoutHandler = ()=>{
     sessionStorage.removeItem("x-access-token")
+    navigate('/')
   }
 
   return (
