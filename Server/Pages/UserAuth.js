@@ -74,7 +74,7 @@ router.post('/login',async (req,res)=>{
                     // res.cookie("cookToken",token)
                     console.log(token)
                     // res.cookie.localStorage.setItem('token', token);
-                 res.status(200).send(`"user login Success"${token}`)
+                //  res.status(200).send(`"user login Success"${token}`)
                 return res.json(token)
             }
         }     

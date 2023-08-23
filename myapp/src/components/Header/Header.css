@@ -1,0 +1,10 @@
+.navbar{
+
+    display: flex;
+  
+    gap:20px;
+  
+    font-family: sans-serif;
+    color: #fff;
+  
+  }
