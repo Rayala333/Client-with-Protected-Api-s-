@@ -70,9 +70,9 @@ router.post('/login',async (req,res)=>{
                     // res.status(200).send("user login success")
                     // res.json(token)
 
-                    const token = jwt.sign({ID},process.env.SECURET_KEY,{expiresIn:2000})
+                    const token = jwt.sign({ID},process.env.SECURET_KEY,{expiresIn:1000})
                     // res.cookie("x-access-token",token)
-                    console.log(token)
+                    console.log(token,token.exp,'find the data')
                     // res.cookie.localStorage.setItem('token', token);
                 //  res.status(200).send(`"user login Success"${token}`)
                 return res.json(token)

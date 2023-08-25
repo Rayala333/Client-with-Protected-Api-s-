@@ -16,8 +16,23 @@ const Auth = async (req,res,next)=>{
         // console.log(verifyUser)
         // next()
 
-        const decoded = jwt.verify(token, process.env.SECURET_KEY);
-        req.user = decoded.user;
+       const decoded =  jwt.verify(token, process.env.SECURET_KEY,(err,res)=>{
+            // console.log(err,'err')
+            // console.log(res,"result")
+            if(err){
+                return "token expired "
+            }
+
+            return res
+
+        });
+        if(decoded=="token expired"){
+                //  console.log("JWT......")
+                return res.send({status:"error",data:"token expried"})
+        }
+        req.user = decoded;
+        // console.log(decoded.ID,'user')
+        // console.log(req.user.exp,'user-1')
         next()
 
     }catch(err){

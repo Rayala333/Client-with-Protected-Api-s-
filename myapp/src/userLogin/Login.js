@@ -38,7 +38,10 @@ const Login = () => {
 
                       if(token){
                         alert("Login success")
-                        sessionStorage.setItem('x-access-token', JSON.stringify(token));
+                        sessionStorage.setItem('x-access-token', JSON.stringify({
+                            value:token,
+                            expDate:token.exp
+                        }));
                         navigate('/Dashbord')
                       }else{
                         alert("in valied dateils")
