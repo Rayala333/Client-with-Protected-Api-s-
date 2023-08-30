@@ -4,16 +4,21 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const cookieParser = require('cookie-parser')
 
+const nodemailer = require('nodemailer');
+
 //model
 const user = require('../SchemaModel/model')
 
 const middleware = require('../middleware/middleware')
 
+const upload = require('./UploadImage')
+
 //Api"s
 
 // Registation api
-router.post('/register',async (req,res)=>{
+router.post('/register',upload.single('image'),async (req,res)=>{
     const {name,email,password,conformPassword,gender} = req.body
+    const image = req.file.filename
     // const {name} = req.body
     if(!name || !email || !password || !conformPassword || !gender){
         return res.status(422).json({error:"plz filled the field requre"})
@@ -27,7 +32,7 @@ router.post('/register',async (req,res)=>{
             return res.status(400).send("pasword miss match...")
         }else{
             let newuser=new user({
-                name,email,password,conformPassword,gender
+                name,email,password,conformPassword,gender,image
             })
 
             await newuser.save()
@@ -103,6 +108,32 @@ router.post('/login',async (req,res)=>{
 // })
 
 
+router.post('/forget-password', async(req,res)=>{
 
+    const {email}=req.body
+
+    const useremail = await user.findOne({email:email})
+
+    if(!useremail){
+        return  res.status(403).json({error:"User not found"})
+    }else{
+        const Id=useremail._id
+
+        const token = jwt.sign({Id},'FORGOT_SECURET_KEY',{expiresIn:1000})
+
+        // return res.send(token)
+        // user.resetToken = token;
+        const link = `http://localhost:3000/reset-password/${Id}/${token}`
+        // console.log(link,"link")
+       
+    }
+
+})
+
+
+router.get('/reset-password/:Id/:token',(req,res)=>{
+    const {Id,token}=req.params
+    console.log(req.params)
+})
 
 module.exports = router

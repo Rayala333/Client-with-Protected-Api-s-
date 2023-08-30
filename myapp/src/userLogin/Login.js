@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 import { useNavigate } from 'react-router-dom';
 
-import {Dashbord }from '../pages/Dashbord';
+// import {Dashbord }from '../pages/Dashbord';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -38,10 +38,7 @@ const Login = () => {
 
                       if(token){
                         alert("Login success")
-                        sessionStorage.setItem('x-access-token', JSON.stringify({
-                            value:token,
-                            expDate:token.exp
-                        }));
+                        sessionStorage.setItem('x-access-token', JSON.stringify(token));
                         navigate('/Dashbord')
                       }else{
                         alert("in valied dateils")
@@ -50,6 +47,7 @@ const Login = () => {
                       
                     }catch(err){
                         console.log(err.message)
+                        alert("server error: Server is not connected Please tray later")
                     }
        }
 

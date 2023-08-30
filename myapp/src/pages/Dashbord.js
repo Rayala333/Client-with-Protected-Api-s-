@@ -1,12 +1,12 @@
 import React, { useEffect, useState} from 'react';
-import axios, { isCancel } from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import login from '../userLogin/Login';
+// import login from '../userLogin/Login';
 
 const Dashbord = () => {
   const navigate = useNavigate()
   const [data,setData]=useState([])
-  const [exp,setExp]=useState()
+  // const [exp,setExp]=useState()
 
   const token = JSON.parse(sessionStorage.getItem("x-access-token"))
   // console.log(token)
@@ -14,11 +14,16 @@ const Dashbord = () => {
 
   // const [reload,setReload]=useState(false)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  console.log(data,"Date")
   const getData = async()=>{
                  const result = await axios.get('http://localhost:8080/user',{headers:{"x-access-token":token}})
 
                  const userdata = result.data
-                //  setData(userdata.userDetails)
+                 setData(userdata.userDetails)
+
+                //  console.log(userdata,"User")
 
                       // if(userdata){
                       //   console.log(userdata,"userdata")
@@ -26,24 +31,20 @@ const Dashbord = () => {
                       //   console.log("No data")
                       // )
             
-                      if(JSON.stringify(userdata.userDetails)!==JSON.stringify(data)){
-                        setData(userdata.userDetails)
-                        setExp(userdata.Exp)
-                        console.log(userdata,'mmm')
-                      }
+                      // if(JSON.stringify(userdata.userDetails)!==JSON.stringify(data)){
+                      //   setData(userdata)
+                      //   // setExp(userdata.Exp)
+                      // }
                      }
  
   useEffect(()=>{
-    // let calling = false
+    
+    
+      getData()
 
-    // if(!calling){getData()}
+  },[])
 
-    // return ()=>{calling=true}
-    getData()
- 
-  },[data])
-
-console.log(typeof(exp),'exp',exp*1000)
+// console.log(typeof(exp),'exp',exp*1000)
  
 
   const logoutHandler = ()=>{
@@ -53,12 +54,12 @@ console.log(typeof(exp),'exp',exp*1000)
      navigate('/')
   }
 
-  setTimeout(()=>{
-    logoutHandler()
-  },2000)
+  // setTimeout(()=>{
+  //   logoutHandler()
+  // },2000)
 
 //  console.log(data[1]*1000,'time')
- console.log(Date.now())
+//  console.log(Date.now())
 //  if(data.exp * 1000 < Date.now()){
 //   logoutHandler()
 //  }
@@ -67,10 +68,10 @@ console.log(typeof(exp),'exp',exp*1000)
 
   return (
     <>
-    {/* {
-      !data  && <div>Loading...</div>
-    } */}
+    <p>{data.name}</p>
+   
     <button onClick={logoutHandler}>logout</button>
+    
 
     </>
   )

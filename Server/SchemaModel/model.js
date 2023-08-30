@@ -23,6 +23,10 @@ const user = new mongoose.Schema({
     gender:{
         type:"string",
         require:true
+    },
+    image:{
+        type:"string",
+        require:true
     }
  
 })
@@ -40,6 +44,7 @@ user.pre('save', async function(next){
         next(err.mesage)
     }
 });
+
 
 
 // generating token
